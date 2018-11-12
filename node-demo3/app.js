@@ -10,6 +10,10 @@ app.get('/', (req, res) => {
     res.render('product')
 })
 
+app.get('/product', (req, res) => {
+    res.render('product')
+})
+
 app.get('/login', (req, res) => {
     res.render('login')
 })
