@@ -18,7 +18,7 @@ app.use(session({
     secret: 'fffdst',
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 10000 }
+    cookie: { maxAge: 10000000 }
 }))
 
 app.use((req, res, next) => {
@@ -65,9 +65,19 @@ app.post('/doLogin', (req, res) => {
 })
 
 app.get('/product', (req, res) => {
-    console.log(req.session.userinfo);
-
-    res.render('product')
+    mongoClient.connect(monogoUrl, { useNewUrlParser: true }, (error, client) => {
+        if (error) {
+            console.log('连接数据库失败');
+        }
+        const db = client.db(dbName)
+        db.collection('product').find().toArray((err, results) => {
+            if (err) {
+                console.log(err);
+                return
+            }
+            res.render('product', { list: results })
+        })
+    })
 })
 
 
