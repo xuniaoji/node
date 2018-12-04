@@ -3,11 +3,14 @@ const bodyParser = require('body-parser')
 const app = express()
 const md5 = require('md5-node')
 
+const mongoose = require('mongoose')
+
 const multiparty = require('multiparty');
 
 const mongoModule = require('./modules/db')
 
-const adminRouter = require('./routes/admin')
+
+// const adminRouter = require('./routes/admin')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.set('view engine', 'ejs')
@@ -37,6 +40,44 @@ app.use((req, res, next) => {
         }
     }
 })
+
+/* const monogoUrl = 'mongodb://127.0.0.1:27017'
+const dbName = 'admin'
+
+mongoose.connect(`${monogoUrl}/${dbName}`);
+const db = mongoose.connection
+
+db.on('error', () => {
+    console.log('mongoose error')
+})
+db.once('open', () => {
+    console.log('moogoose connected')
+    const loginScheme = mongoose.Schema({
+        sex: String,
+        job: String
+    })
+
+
+    loginScheme.methods.doJob = function () {
+        console.log(this.sex + '444444');
+
+    }
+    const loginModel = mongoose.model('loginModel', loginScheme);
+    const loginInstance = new loginModel({ sex: 'nv', job: '123dd456' })
+    console.log(loginInstance.sex);
+    loginInstance.doJob()
+
+    loginInstance.save((err, loginInstance) => {
+        if (err) {
+            return console.log(err)
+        }
+        loginInstance.doJob()
+        loginModel.find({ sex: /^nv/ }, (err, datas) => {
+            console.log(datas);
+
+        })
+    })
+}) */
 
 // app.use('/admin', adminRouter)
 

@@ -15,7 +15,7 @@ function connectDb(callbackBig) {
 // Db.find('user',{},(errmdata)=>{})
 exports.find = (collection, searchParam, callback) => {
     connectDb(client => {
-        const db = client.db('admin')
+        const db = client.db(dbName)
         db.collection(collection).find(searchParam).toArray((error, results) => {
             if (error) {
                 console.log(err);
@@ -28,7 +28,7 @@ exports.find = (collection, searchParam, callback) => {
 
 exports.insert = (collection, insertParam, callback) => {
     connectDb(client => {
-        const db = client.db('admin')
+        const db = client.db(dbName)
         db.collection(collection).insertOne(insertParam, (error, results) => {
             if (error) {
                 console.log(err);
