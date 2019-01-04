@@ -3,20 +3,20 @@ const bodyParser = require('body-parser')
 const app = express()
 const md5 = require('md5-node')
 
-const mongoose = require('mongoose')
+// const mongoose = require('mongoose')
 
 const multiparty = require('multiparty');
 
 const mongoModule = require('./modules/db')
 
 
-// const adminRouter = require('./routes/admin')
+const adminRouter = require('./routes/admin')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.set('view engine', 'ejs')
 
 app.use(express.static('public'))
-
+app.use('/public/upload', express.static('public/upload'));
 const session = require('express-session');
 
 app.use(session({
@@ -79,7 +79,7 @@ db.once('open', () => {
     })
 }) */
 
-// app.use('/admin', adminRouter)
+app.use('/admin', adminRouter)
 
 app.get('/', (req, res) => {
     res.render('login')
